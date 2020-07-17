@@ -974,18 +974,6 @@ static void ion_dma_buf_release(struct dma_buf *dmabuf)
 	ion_buffer_put(buffer);
 }
 
-static void *ion_dma_buf_kmap(struct dma_buf *dmabuf, unsigned long offset)
-{
-	struct ion_buffer *buffer = dmabuf->priv;
-
-	return buffer->vaddr + offset * PAGE_SIZE;
-}
-
-static void ion_dma_buf_kunmap(struct dma_buf *dmabuf, unsigned long offset,
-			       void *ptr)
-{
-}
-
 static int ion_dma_buf_begin_cpu_access(struct dma_buf *dmabuf,
 					enum dma_data_direction direction)
 {
@@ -1023,8 +1011,6 @@ static struct dma_buf_ops dma_buf_ops = {
 	.release = ion_dma_buf_release,
 	.begin_cpu_access = ion_dma_buf_begin_cpu_access,
 	.end_cpu_access = ion_dma_buf_end_cpu_access,
-	.map = ion_dma_buf_kmap,
-	.unmap = ion_dma_buf_kunmap,
 };
 
 static struct dma_buf *__ion_share_dma_buf(struct ion_client *client,
